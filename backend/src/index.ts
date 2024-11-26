@@ -1,36 +1,28 @@
 import { Hono } from "hono";
-import { PrismaClient } from "@prisma/client";
-import { addUser } from "./controller/functions";
-import { User } from "./models/Interfaces";
+import { getPrisma } from "./services/getPrismaFunction";
 
-const prisma = new PrismaClient();
-
-const app = new Hono();
+const app = new Hono<{
+  Bindings: {
+    DATABASE_URL: string;
+  };
+}>();
 
 app.post("/addUser", async (c) => {
   try {
-    // const newUserDetails: User = {
-    //   Name: "Bunkayo Sanka",
-    //   Username: "LittleChilli",
-    //   Password: "AFCRocks",
-    // };
-    // await addUser(newUserDetails);
-    // debugger;
-
-    console.log("Before create call");
-    const res = await prisma.user.createMany({
+    console.log("DATABASE_URL::", c.env.DATABASE_URL);
+    const prisma = getPrisma(c.env.DATABASE_URL);
+    const { Name, Username, Password } = await c.req.json();
+    const newUser = await prisma.user.create({
       data: {
-        Name: "Sample",
-        Username: "Samp",
-        Password: "Pass",
+        Name,
+        Username,
+        Password,
       },
     });
-    console.log("Resposne::", res);
-
-    return c.json({ newUser: "NEw user" });
-  } catch (error) {
-    console.error(error);
-    return c.text("Error while adding new User", 500);
+    return c.json({ newUser: newUser });
+  } catch (error: any) {
+    console.error("Error::", error);
+    return c.json({ error: error.message }, 500);
   }
 });
 

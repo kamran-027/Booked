@@ -1,8 +1,9 @@
 name = "booked-backend"
 compatibility_date = "2024-07-19"
 
-# [vars]
-# MY_VAR = "my-variable"
+[vars]
+DATABASE_URL="prisma://accelerate.prisma-data.net/?api_key=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcGlfa2V5IjoiYTMxNTUyZDctNWM2NC00MTQ5LTg3ZjUtNDY4ZDAzZDQxMWUwIiwidGVuYW50X2lkIjoiNmQxMGJhYTQ0ZDYzNWE4MDEyMzQ1YmIyYTBjMzA3MWM2NGU1ZWE4YmUyNjY4NGE5NGZkNjY1NTViNjlmMzg0NyIsImludGVybmFsX3NlY3JldCI6IjE2NzVmNzlkLTkyNGMtNDA0ZS1iOGRhLTJkOWNmZTlhNTkwNiJ9.uniccWutqNyGp6T30i_Hy4UV0KuugyMj3dmIisT4kOU"
+DIRECT_URL="postgresql://mySecretUser:mySecretPass@db:5432/bookedDB"
 
 # [[kv_namespaces]]
 # binding = "MY_KV_NAMESPACE"
